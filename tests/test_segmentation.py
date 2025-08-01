@@ -39,7 +39,9 @@ class TestWordSegmentation:
             )
 
             for case in test_cases:
-                result = nuuvify_wordsegment_service.segment_and_format(case["input"])
+                result = nuuvify_wordsegment_service.segment_and_format(
+                    case["input"], "pt"
+                )
                 print(f"✅ '{case['input']}' → '{result}'")
                 # Note: Não fazemos assert do resultado esperado pois depende do modelo NLP
                 assert isinstance(result, str)
@@ -83,7 +85,8 @@ class TestWordSegmentation:
             for case in test_cases:
                 try:
                     response = await client.post(
-                        f"{base_url}/api/v1/segment/", json={"text": case["input"]}
+                        f"{base_url}/api/v1/segment/",
+                        json={"text": case["input"], "language": "pt"},
                     )
 
                     if response.status_code == 200:
@@ -109,9 +112,9 @@ async def test_segmentation_api():
 
     # Dados de teste
     test_cases = [
-        {"text": "minhacasatemsp"},
-        {"text": "euamoobrasilsp"},
-        {"text": "sistemadeinformacaomg"},
+        {"text": "minhacasatemsp", "language": "pt"},
+        {"text": "euamoobrasilsp", "language": "pt"},
+        {"text": "sistemadeinformacaomg", "language": "pt"},
     ]
 
     async with httpx.AsyncClient() as client:
@@ -167,7 +170,7 @@ def test_local_segmentation():
         ]
 
         for text in test_cases:
-            result = nuuvify_wordsegment_service.segment_and_format(text)
+            result = nuuvify_wordsegment_service.segment_and_format(text, "pt")
             print(f"✅ '{text}' → '{result}'")
 
     except Exception as e:

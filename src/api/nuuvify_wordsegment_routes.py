@@ -10,7 +10,9 @@ router = APIRouter(prefix="/segment", tags=["Word Segmentation"])
 async def segment_text(input_data: WordSegmentationRequest):
     """Segmenta e formata texto usando NLP"""
     try:
-        result = nuuvify_wordsegment_service.segment_and_format(input_data.text)
+        result = nuuvify_wordsegment_service.segment_and_format(
+            input_data.text, input_data.language
+        )
         return WordSegmentationResponse(original=input_data.text, formatted=result)
     except Exception as e:
         raise HTTPException(

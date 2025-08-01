@@ -3,20 +3,48 @@ import spacy
 
 class WordSegmenter:
     def __init__(self):
-        # Carrega modelo de português
-        self.nlp = spacy.load("pt_core_news_lg")
+        # Modelos carregados por idioma
+        self.models = {}
 
-        # Siglas que devem ser preservadas
-        self.SIGLAS = {"sp", "ti", "mg", "pi", "pr"}
+        # Mapeamento de idiomas para modelos
+        self.language_models = {"pt": "pt_core_news_lg", "en": "en_core_web_lg"}
 
-    def segment_and_format(self, text: str) -> str:
+        # Siglas que devem ser preservadas por idioma
+        self.SIGLAS = {
+            "pt": {"sp", "ti", "mg", "pi", "pr"},
+            "en": {"usa", "uk", "ai", "it", "hr"},
+        }
+
+    def _get_model(self, language: str):
+        """Carrega o modelo para o idioma especificado se ainda não estiver carregado"""
+        if language not in self.models:
+            if language not in self.language_models:
+                raise ValueError(
+                    f"Idioma '{language}' não suportado. Use 'pt' ou 'en'."
+                )
+
+            model_name = self.language_models[language]
+            try:
+                self.models[language] = spacy.load(model_name)
+            except OSError:
+                raise RuntimeError(
+                    f"Modelo '{model_name}' não encontrado. "
+                    "Certifique-se de que está instalado."
+                )
+
+        return self.models[language]
+
+    def segment_and_format(self, text: str, language: str) -> str:
         """Segmenta e formata o texto usando NLP"""
-        doc = self.nlp(text.lower())
+        nlp = self._get_model(language)
+        doc = nlp(text.lower())
         tokens = [t.text for t in doc if t.is_alpha]
 
         formatted = []
+        siglas = self.SIGLAS.get(language, set())
+
         for token in tokens:
-            if token in self.SIGLAS:
+            if token in siglas:
                 formatted.append(token.upper())
             else:
                 formatted.append(token.capitalize())
@@ -26,8 +54,8 @@ class WordSegmenter:
     async def check_connection_status(self) -> dict:
         """Verifica o status do serviço de segmentação"""
         try:
-            # Teste simples para verificar se o modelo está carregado
-            self.nlp("teste")
+            # Teste simples para verificar se pelo menos um modelo pode ser carregado
+            self._get_model("pt")  # Testa carregamento do modelo português
             return {
                 "service": "word_segmentation",
                 "status": "active",
