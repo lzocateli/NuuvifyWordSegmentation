@@ -1,10 +1,14 @@
 {
+  "python.defaultInterpreter": "${workspaceFolder}/.venv/bin/python",
+  "python.terminal.activateEnvironment": true,
+  "python.envFile": "${workspaceFolder}/.env",
   "editor.codeActionsOnSave": {
     "source.fixAll": "explicit",
     "source.organizeImports": "explicit",
     "source.addMissingImports": "explicit",
-    "source.removeUnused": "explicit",
+    "source.removeUnused": "explicit"
   },
   "editor.formatOnSave": true,
-  "terminal.integrated.fontFamily": "MesloLGL Nerd Font"
+  "terminal.integrated.fontFamily": "MesloLGL Nerd Font",
+  "python-envs.pythonProjects": []
 }

@@ -80,19 +80,13 @@ curl -X POST "http://localhost:8000/api/v1/segment/" \
 #### Instalação das dependências
 
 ```bash
-# Opção 1: Usando pip (padrão)
-pip install -e .
-
-# Opção 2: Usando uv (mais rápido - requer instalação)
+# Usando uv (mais rápido - requer instalação)
 # Instalar uv primeiro:
 curl -LsSf https://astral.sh/uv/install.sh | sh
 # Em seguida:
-uv pip install -e .
+uv venv
+source .venv/bin/activate && uv pip install -e .
 
-# Opção 3: Com ambiente virtual (recomendado)
-python -m venv venv
-source venv/bin/activate  # No Windows: venv\Scripts\activate
-pip install -e .
 ```
 
 ### Executar o servidor
@@ -103,6 +97,20 @@ uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
 
 # Ou usando o módulo Python
 python -m uvicorn src.api.main:app --reload
+```
+
+### Parar o servidor
+
+```bash
+# Método 1: Ctrl+C no terminal onde o servidor está rodando
+# Pressione Ctrl+C
+
+# Método 2: Parar processo uvicorn
+pkill -f "uvicorn src.api.main:app"
+
+# Método 3: Parar por PID específico
+ps aux | grep uvicorn  # encontrar o PID
+kill <PID>             # substituir <PID> pelo número do processo
 ```
 
 ## 📋 Endpoints Disponíveis
@@ -450,6 +458,22 @@ sudo usermod -a -G docker $USER
 docker-compose up nuuvify-dev -p 8001:8000
 # Local: usar porta diferente
 uvicorn src.api.main:app --reload --port 8001
+```
+
+#### 8. Como parar o servidor uvicorn
+```bash
+# Método mais comum: Ctrl+C no terminal ativo
+# Pressione Ctrl+C onde o servidor está rodando
+
+# Parar processo uvicorn por nome
+pkill -f "uvicorn src.api.main:app"
+
+# Parar todos os processos Python
+pkill -f python
+
+# Encontrar e matar processo específico
+ps aux | grep uvicorn
+kill <PID>  # usar o PID encontrado
 ```
 
 ### Verificação de Instalação
