@@ -1,0 +1,49 @@
+# Dockerfile para desenvolvimento
+ARG BUILDPLATFORM=linux/amd64
+ARG PYTHON_VERSION=3.12
+
+FROM --platform=$BUILDPLATFORM lzocateli/devops:${PYTHON_VERSION}-bookworm
+
+# Configurar Python para desenvolvimento
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH="/app/src:$PYTHONPATH"
+
+# Instalar dependências de sistema
+RUN apt-get update && apt-get install -y \
+    --no-install-recommends \
+    curl \
+    git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar usuário não-root
+RUN groupadd --gid 1000 appuser && \
+    useradd --uid 1000 --gid appuser --shell /bin/bash --create-home appuser
+
+WORKDIR /app
+
+# Copiar arquivos de configuração
+COPY pyproject.toml ./
+
+# Instalar dependências (incluindo dev)
+RUN pip install --upgrade pip setuptools wheel && \
+    pip install -e ".[dev]"
+
+# Baixar modelo spaCy
+RUN python -c "import spacy; spacy.cli.download('pt_core_news_sm')"
+
+# Copiar código fonte
+COPY --chown=appuser:appuser . /app/
+
+# Mudar para usuário não-root
+USER appuser
+
+# Expor porta
+EXPOSE 8000
+
+# Health check para desenvolvimento
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD curl -f http://localhost:8000/api/v1/health || exit 1
+
+# Comando para desenvolvimento (com reload)
+CMD ["uvicorn", "src.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

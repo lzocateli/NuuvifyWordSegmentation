@@ -1,0 +1,10 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "source.addMissingImports": "explicit",
+    "source.removeUnused": "explicit",
+  },
+  "editor.formatOnSave": true,
+  "terminal.integrated.fontFamily": "MesloLGL Nerd Font"
+}

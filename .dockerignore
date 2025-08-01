@@ -1,0 +1,64 @@
+# Arquivos de desenvolvimento
+.git
+.gitignore
+.gitattributes
+.devcontainer/
+.vscode/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Pytest cache
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Dependências locais
+node_modules/
+
+# Arquivos temporários
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Documentação
+*.md
+docs/
+
+# Testes (não necessários em produção)
+tests/
+run_tests.py
+
+# Arquivos de configuração local
+.env
+.env.local
+.env.*.local
+
+# Pipelines CI/CD
+pipelines/
+.github/
+.gitlab-ci.yml
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# IDE files
+.idea/
+*.swp
+*.swo
+*~

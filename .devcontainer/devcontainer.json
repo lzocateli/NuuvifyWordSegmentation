@@ -1,0 +1,57 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/dotnet
+{
+	"name": "python",
+	"build": {
+		"context": ".",
+		"dockerfile": "Dockerfile"
+	},
+	"remoteEnv": {
+		"AZURE_DEVOPS_EXT_PAT": "${localEnv:AZURE_DEVOPS_EXT_PAT}"
+	},
+	"mounts": [
+		"source=${localEnv:TMP}\\linux,target=/tmp,type=bind,consistency=cached",
+		"source=${localEnv:APPDATA}\\pip\\linux\\pip.conf,target=/root/.config/pip/pip.conf,type=bind,consistency=cached",
+		"source=${localEnv:APPDATA}\\NuGet\\linux\\NuGet.Config,target=/root/.nuget/NuGet/NuGet.Config,type=bind,consistency=cached",
+		"source=${localEnv:APPDATA}\\Microsoft\\UserSecrets,target=/root/.microsoft/usersecrets,type=bind,consistency=cached"
+	],
+	"containerEnv": {
+		"WORKFOLDER": "${containerWorkspaceFolder}",
+		"HTTP_PROXY": "${localEnv:HTTP_PROXY}",
+		"HTTPS_PROXY": "${localEnv:HTTPS_PROXY}",
+		"NO_PROXY": "${localEnv:NO_PROXY}"
+	},
+	"onCreateCommand": "chmod +x ./.devcontainer/custom-install.sh && chmod +x ./.devcontainer/.zshrc",
+	"postCreateCommand": "./.devcontainer/custom-install.sh",
+
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.fontFamily": "MesloLGM Nerd Font", // ou "MesloLGM NF"
+				"terminal.integrated.defaultProfile.linux": "zsh"
+			},
+			"extensions": [
+				"eamodio.gitlens",
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"ms-python.black-formatter",
+				"njpwerner.autodocstring",
+				"ms-toolsai.datawrangler",
+				"ms-toolsai.jupyter",
+				"qwtel.sqlite-viewer",
+				"mechatroner.rainbow-csv",
+				"tamasfe.even-better-toml",
+				"github.copilot",
+				"ms-vscode-remote.vscode-remote-extensionpack",
+				"ms-azuretools.vscode-containers",
+				"github.remotehub",
+				"shynet.vscode-taskkill",
+				"cweijan.dbclient-jdbc",
+				"cweijan.vscode-database-client2",
+				"yzhang.markdown-all-in-one",
+				"charliermarsh.ruff",
+				"dotjoshjohnson.xml"
+			]
+		}
+	}
+}

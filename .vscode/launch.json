@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FastAPI with uvicorn - QAS",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "uvicorn",
+            "windows": {
+                "console": "integratedTerminal",
+                "envFile": "${userHome}/AppData/Roaming/Microsoft/UserSecrets/NuuvifyWordSegmentation/env.qas",
+                "args": [
+                    "src.api.main:app",
+                    "--host",
+                    "0.0.0.0",
+                    "--port",
+                    "8000"
+                ],
+                "env": {
+                    "FLASK_ENV": "development",
+                    "UVICORN_CMD": "uv run uvicorn"
+                },
+            },
+            "linux": {
+                "console": "integratedTerminal",
+                "envFile": "${userHome}/.microsoft/usersecrets/NuuvifyWordSegmentation/env.qas",
+                "args": [
+                    "src.api.main:app",
+                    "--host",
+                    "0.0.0.0",
+                    "--port",
+                    "8000"
+                ],
+                "env": {
+                    "FLASK_ENV": "development",
+                    "UVICORN_CMD": "uv run uvicorn"
+                },
+            },
+        }
+    ]
+}
