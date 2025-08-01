@@ -4,7 +4,7 @@ import spacy
 class WordSegmenter:
     def __init__(self):
         # Carrega modelo de português
-        self.nlp = spacy.load("pt_core_news_sm")
+        self.nlp = spacy.load("pt_core_news_lg")
 
         # Siglas que devem ser preservadas
         self.SIGLAS = {"sp", "ti", "mg", "pi", "pr"}

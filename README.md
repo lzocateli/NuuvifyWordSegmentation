@@ -324,7 +324,7 @@ source venv/bin/activate  # No Windows: venv\Scripts\activate
 pip install -e .
 
 # 3. Baixar modelo spaCy
-python -c "import spacy; spacy.cli.download('pt_core_news_sm')"
+python -c "import spacy; spacy.cli.download('pt_core_news_lg')"
 
 # 4. Executar servidor
 uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
@@ -439,10 +439,10 @@ pip install -e .
 pip install -e .
 ```
 
-#### 5. `OSError: [E050] Can't find model 'pt_core_news_sm'` (instalação local)
+#### 5. `OSError: [E050] Can't find model 'pt_core_news_lg'` (instalação local)
 ```bash
 # Solução: Baixar modelo spaCy
-python -c "import spacy; spacy.cli.download('pt_core_news_sm')"
+python -c "import spacy; spacy.cli.download('pt_core_news_lg')"
 ```
 
 #### 6. `Permission denied: docker`

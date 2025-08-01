@@ -184,7 +184,7 @@ def main():
         print("\n🎉 Pré-requisitos para instalação local atendidos!")
         print("\n🚀 Próximos passos (Instalação Local):")
         print("1. pip install -e .")
-        print("2. python -c \"import spacy; spacy.cli.download('pt_core_news_sm')\"")
+        print("2. python -c \"import spacy; spacy.cli.download('pt_core_news_lg')\"")
         print("3. uvicorn src.api.main:app --reload")
         print("\n💡 DICA: Para uma experiência melhor, instale Docker e use:")
         print("./docker-deploy.sh latest run-dev")

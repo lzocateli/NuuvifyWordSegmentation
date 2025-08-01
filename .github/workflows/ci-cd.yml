@@ -39,7 +39,7 @@ jobs:
     
     - name: Download spaCy model
       run: |
-        python -c "import spacy; spacy.cli.download('pt_core_news_sm')"
+        python -c "import spacy; spacy.cli.download('pt_core_news_lg')"
     
     - name: Run linting
       run: |

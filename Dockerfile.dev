@@ -30,7 +30,7 @@ RUN pip install --upgrade pip setuptools wheel && \
     pip install -e ".[dev]"
 
 # Baixar modelo spaCy
-RUN python -c "import spacy; spacy.cli.download('pt_core_news_sm')"
+RUN python -c "import spacy; spacy.cli.download('pt_core_news_lg')"
 
 # Copiar código fonte
 COPY --chown=appuser:appuser . /app/

@@ -33,7 +33,7 @@ RUN pip install --upgrade pip setuptools wheel && \
     pip install -e .
 
 # Baixar modelo spaCy (pode ser demorado, melhor fazer no build)
-RUN python -c "import spacy; spacy.cli.download('pt_core_news_sm')"
+RUN python -c "import spacy; spacy.cli.download('pt_core_news_lg')"
 
 # Stage 2: Production image
 FROM --platform=$BUILDPLATFORM lzocateli/devops:${PYTHON_VERSION}-bookworm as production
